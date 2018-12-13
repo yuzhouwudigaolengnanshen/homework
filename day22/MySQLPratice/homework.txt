@@ -1,0 +1,74 @@
+查询姓“李”的老师的个数
+select count(*) from teacher where Tname like '李%';
+
+查询男女生人数个数
+select count(*),sex from student group by sex;
+
+查询同名同姓学生名单，并统计同名人数
+select * from student where sname in (select sname from student group by sname having COUNT(*)>1);
+select count(*),sname from student group by sname having count(*)>1;
+
+1981年出生的学生名单
+select * from student where year(Sbrithday)= '1981';
+
+查询平均成绩大于60分的同学的学号和平均成绩
+select sid, avg(score) from sc group by sid having avg(score)>=60;
+
+求选了课程的学生人数
+select  cid,count(cid) from sc group by cid;
+
+查询至少选修两门课程的学生学号
+select sid ,count(*) from sc group by sid having count(*)>=2;
+
+查询各科成绩最高和最低的分。以如下形式显示：课程ID，最高分，最低分
+select Cid '课程ID',max(Score) '最高分',min(Score) '最低分' from sc group by Cid;
+
+统计每门课程的学生选修人数。要求输出课程号和选修人数，查询结果按人数降序排列，若人数相同，按课程号升序排列
+select Cid,count(*) from sc group by cid order by count(*) desc ,cid asc;
+
+以下练习针对部门员工表，请导入scott.sql的数据
+
+打印入职时间超过38年的员工信息
+select * from emp where 2018-year(hiredate)>=38;
+
+把hiredate列看做是员工的生日,求本月过生日的员工
+select ename,date(hiredate) from emp where month(hiredate)=12;
+
+把hiredate列看做是员工的生日,求下月过生日的员工
+select ename,date(hiredate) from emp where month(hiredate)=1;
+
+求1980年下半年入职的员工
+select * from emp where year(hiredate)=1980 and month(hiredate)>6;
+
+请用两种的方式查询所有名字长度为4的员工的员工编号,姓名
+select empno ,ename from emp having length(ename)=4;
+
+显示各种职位的最低工资
+select job ,min(sal) from emp group by job;
+
+求1980年各个月入职的的员工个数
+select month(hiredate) ,count(*) from emp where year(hiredate)=1980 group by month(hiredate);
+
+查询每个部门的最高工资
+select deptno ,max(sal) from emp group by deptno order by  max(sal) desc ;
+
+查询每个部门,每种职位的最高工资
+select deptno 部门编号,job 职位,max(sal) 最高工资 from emp group by deptno,job order by max(sal);
+
+查询各部门的总工资和平均工资
+select deptno,sum(sal),avg(sal) from emp group by deptno;
+
+查询10号部门,20号部门的平均工资（尝试用多种写法）
+select deptno,avg(sal) from emp where deptno=20 or deptno=10 group by deptno;
+
+查询平均工资高于2000元的部门编号和平均工资
+select deptno,avg(sal) from emp group by deptno having avg(sal)>2000;
+
+统计公司里经理的人数
+select count(*),job from emp where job = 'MANAGER';
+
+查询工资最高的3名员工信息
+select * from emp order by sal desc limit 3;
+
+查询工资由高到低第6到第10的员工信息
+select * from emp order by sal desc limit 5,5;
