@@ -1,4 +1,4 @@
-查询姓“李”的老师的个数
+﻿查询姓“李”的老师的个数
 select count(*) from teacher where Tname like '李%';
 
 查询男女生人数个数
@@ -72,3 +72,4 @@ select * from emp order by sal desc limit 3;
 
 查询工资由高到低第6到第10的员工信息
 select * from emp order by sal desc limit 5,5;
+
